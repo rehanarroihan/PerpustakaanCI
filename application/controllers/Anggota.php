@@ -41,6 +41,20 @@ class Anggota extends CI_Controller {
 		$this->load->view('template_view', $data);
 	}
 
+	public function edit(){
+		$id = $this->input->get('idtf');
+		//CHECK : Data Availability
+		if($this->Anggota_model->checkAvailability($id) == true){
+			$data['primary_view'] = 'anggota/edit_anggota_view';
+		}else{
+			$data['primary_view'] = '404_view';
+		}
+		$data['title'] = 'Edit Anggota';
+		$data['detail'] = $this->Anggota_model->getDetail($id);
+		//exit(json_encode($this->Anggota_model->getDetail($id)));
+		$this->load->view('template_view', $data);
+	}
+
 	public function submit(){
 		if($this->input->post('t')){
 			$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'trim|required');
@@ -76,6 +90,29 @@ class Anggota extends CI_Controller {
 				$this->session->set_flashdata('announce', validation_errors());
 				redirect('anggota/add');
 			}
+		}
+	}
+
+	public function submitEdit(){
+		if($this->input->post('submit')){
+			/* $this->form_validation->set_rules('judul', 'Judul Buku', 'trim|required');
+			$this->form_validation->set_rules('penulis', 'Penulis', 'trim|required');
+			$this->form_validation->set_rules('penerbit', 'Penerbit', 'trim|required');
+			$this->form_validation->set_rules('tahun', 'Tahun', 'trim|required|numeric');
+			$this->form_validation->set_rules('jumlah', 'Jumlah', 'trim|required|numeric'); */
+
+			//if ($this->form_validation->run() == true) {
+				if($this->Anggota_model->update($this->input->post('id')) == true){
+					$this->session->set_flashdata('announce', 'Berhasil menyimpan data');
+					redirect('anggota/edit?idtf='.$this->input->post('id'));
+				}else{
+					$this->session->set_flashdata('announce', 'Gagal menyimpan data');
+					redirect('anggota/edit?idtf='.$this->input->post('id'));
+				}
+			/* } else {
+				$this->session->set_flashdata('announce', validation_errors());
+				redirect('buku/edit?idtf='.$this->input->post('id'));
+			} */
 		}
 	}
 

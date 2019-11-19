@@ -70,7 +70,7 @@
                                             <a href="<?php echo base_url() ?>anggota/detail?idtf=<?php echo $listAnggota->ID_ANGGOTA ?>" class="btn btn-info btn-xs">
                                                 <i class="fa fa-list"> View</i>
                                             </a>
-                                            <a href="#" class="btn btn-success btn-xs">
+                                            <a href="<?php echo base_url() ?>anggota/edit?idtf=<?php echo $listAnggota->ID_ANGGOTA ?>" class="btn btn-success btn-xs">
                                                 <i class="fa fa-edit"> Edit</i>
                                             </a>
                                                 <a onclick="sweets()" class="btn btn-danger btn-xs">

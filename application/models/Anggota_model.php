@@ -25,6 +25,21 @@ class Anggota_model extends CI_Model {
 		}
 	}
 
+	public function update($id){
+		$data = array(
+			'FULL_NAME'			=> $this->input->post('nama_lengkap'),
+			'ALAMAT'		=> $this->input->post('alamat'),
+			'TELP'		=> $this->input->post('telp')
+		);
+
+		$this->db->where('ID_ANGGOTA', $id)->update('anggota', $data);
+		if($this->db->affected_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function generateID(){
 		$query = $this->db->order_by('ID_ANGGOTA', 'DESC')->limit(1)->get('anggota')->row('ID_ANGGOTA');
 		$lastNo = substr($query, 3);
