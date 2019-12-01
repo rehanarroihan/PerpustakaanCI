@@ -16,6 +16,16 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                <!-- Notif -->
+                <?php $announce = $this->session->userdata('announce') ?>
+                <?php if(!empty($announce)): ?>
+                    <?php if($announce == 'Berhasil menyimpan data'): ?>
+                    <div class="alert alert-success fade in"><?php echo $announce; ?></div>
+                    <?php else: ?>
+                    <div class="alert alert-danger fade in"><?php echo $announce; ?></div>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <!-- Data -->
                 <?php if($total == 0): ?>
                     <div class="alert alert-danger">Tidak ada data</div>
                     <?php else: ?>
@@ -52,9 +62,9 @@
                                     <a href="<?php echo base_url() ?>petugas/edit?tken=<?php echo $petugasList->ID_ADMIN ?>" class="btn btn-info btn-xs">
                                         <i class="fa fa-edit"> Edit</i>
                                     </a>
-                                    <a href="#" class="btn btn-danger btn-xs">
+                                    <button class="btn btn-danger btn-xs" onclick="deletePetugas()">
                                         <i class="fa fa-trash"> Delete</i>
-                                    </a>
+                                    </button>
                                 </td>
                                 <?php endif; ?>
                             </tr>
@@ -68,3 +78,20 @@
         </div>
     </div>
 </div>
+
+<script>
+function deletePetugas() {
+    swal({
+        title: "Apakah anda yakin ingin menghapus data ?",
+        text: "Data tidak bisa di kembalikan",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Delete",
+        closeOnConfirm: false
+    },
+    function() {
+        window.location.href = "<?php echo base_url() ?>petugas/delete?rcgn=<?php echo $petugasList->ID_ADMIN ?>";
+    });
+}
+</script>
